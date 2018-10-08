@@ -1,14 +1,11 @@
 package com.ayl.rabbitmq.consumer;
 
-import com.ayl.dao.Order;
-import com.rabbitmq.client.AMQP;
+import com.ayl.rabbitmq.entity.OrderInfo;
 import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.impl.AMQImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.amqp.rabbit.annotation.*;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.AmqpHeaders;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
@@ -21,6 +18,7 @@ import java.util.Map;
  */
 @Service
 public class OrderConsumerService {
+    private static Logger logger = LogManager.getLogger();
 
 
     @RabbitListener(bindings = @QueueBinding(
@@ -30,9 +28,9 @@ public class OrderConsumerService {
             )
     )
     @RabbitHandler
-    public void receiveMessage(@Payload Order order, Channel channel,@Headers Map<String,Object> headers) {
-        System.out.println("----------接受到消息------------------");
-        System.out.println("----------orderid：" + order.getId());
+    public void receiveMessage(@Payload OrderInfo orderInfo, Channel channel, @Headers Map<String,Object> headers) {
+        logger.debug("----------接受到消息------------------");
+        logger.debug("----------orderid：" + orderInfo.getId());
         //标识这条消息已经被消费
         Long deliveryTag = (Long)headers.get(AmqpHeaders.DELIVERY_TAG);
         try {

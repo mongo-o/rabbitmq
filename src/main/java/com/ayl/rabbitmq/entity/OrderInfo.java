@@ -1,9 +1,8 @@
-package com.ayl.dao;
+package com.ayl.rabbitmq.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
@@ -13,8 +12,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class Order implements Serializable {
-    private static final long serialVersionUID = 5011886824240620262L;
+public class OrderInfo implements Serializable {
+    private static final long serialVersionUID = 3123255520994259592L;
     private String id;
     private String name;
     private String messageId;
